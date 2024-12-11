@@ -1,13 +1,14 @@
 import streamlit as st
 import numpy as np
 import pandas as pd
-import joblib
+import pickle
 
 # Մոդելի բեռնում
 model = joblib.load('gradient_boosting_model.pkl')
 
 # Տվյալների ներբեռնում
-df = pd.read_csv('NEW_DIGITAL_data.csv')
+with open('gradient_boosting_model.pkl', 'rb') as f:
+    model = pickle.load(f)
 
 # Համայնքների կոդավորված արժեքներ
 community_mapping = {
