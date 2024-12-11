@@ -81,7 +81,7 @@ furniture_encoded = furniture_mapping[furniture]
 # Կանխատեսում
 if st.button("Կանխատեսել վարձը"):
     features = np.array([[total_area, room_count, floor, building_type_encoded, renovation_encoded,
-                          new_building_encoded, furniture, community_code, price_per_sq_meter, area_per_room, old_announcement]])
+                          new_building_encoded, furniture_encoded, community_code, price_per_sq_meter, area_per_room, old_announcement]])
     prediction = model.predict(features)[0]
 
     # Կլորացնում ենք 10,000-ի հաշվարկով
