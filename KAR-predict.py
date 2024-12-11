@@ -2,10 +2,12 @@ import streamlit as st
 import numpy as np
 import pandas as pd
 import pickle
+import joblib
 
 # Մոդելի բեռնում
-with open('gradient_boosting_model.pkl', 'rb') as f:
-    model = pickle.load(f)
+#with open('gradient_boosting_model.pkl', 'rb') as f:
+#    model = pickle.load(f)
+model = joblib.load('gradient_boosting_model.pkl')
 
 # Տվյալների ներբեռնում
 df = pd.read_csv('NEW_DIGITAL_data.csv')
@@ -83,8 +85,9 @@ if st.button("Կանխատեսել վարձը"):
     features = np.array([[total_area, room_count, floor, building_type_encoded, renovation_encoded,
                           new_building_encoded, furniture_encoded, community_code, price_per_sq_meter, area_per_room, old_announcement]])
     prediction = model.predict(features)[0]
-
+    
     # Կլորացնում ենք 10,000-ի հաշվարկով
     rounded_prediction = round(prediction / 10000) * 10000
 
     st.subheader(f"Բնակարանի կանխատեսված ամսեկան վարձը՝ {rounded_prediction:,.0f} դրամ։")
+
