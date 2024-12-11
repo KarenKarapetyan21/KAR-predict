@@ -1,6 +1,6 @@
 import pandas as pd
 import numpy as np
-import joblib
+import pickle
 from sklearn.model_selection import train_test_split, cross_val_score
 from sklearn.metrics import mean_absolute_error, r2_score, mean_squared_error, make_scorer
 from sklearn.ensemble import GradientBoostingRegressor
@@ -45,4 +45,5 @@ gb_model.fit(X_train_full, y_train_full)
 y_pred_gb = gb_model.predict(X_test)
 
 # Պահպանում ենք մոդելը
-joblib.dump(gb_model, 'gradient_boosting_model.pkl')
+with open('gradient_boosting_model.pkl', 'wb') as f:
+    pickle.dump(gb_model, f)
