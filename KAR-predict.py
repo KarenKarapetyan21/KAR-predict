@@ -4,11 +4,11 @@ import pandas as pd
 import pickle
 
 # Մոդելի բեռնում
-model = joblib.load('gradient_boosting_model.pkl')
-
-# Տվյալների ներբեռնում
 with open('gradient_boosting_model.pkl', 'rb') as f:
     model = pickle.load(f)
+
+# Տվյալների ներբեռնում
+df = pd.read_csv('NEW_DIGITAL_data.csv')
 
 # Համայնքների կոդավորված արժեքներ
 community_mapping = {
