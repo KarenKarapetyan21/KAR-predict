@@ -27,7 +27,7 @@ community_mapping = {
 }
 
 # Հավելվածի վերնագիր
-st.title('Բնակարանի Գնի Կանխատեսման Հավելված')
+st.title('Բնակարանի Ամսեկան Վարձի Կանխատեսման Հավելված')
 
 # Մուտքային տվյալներ
 st.header('Մուտքագրեք բնակարանի տվյալները')
@@ -37,6 +37,7 @@ floor = st.number_input("Հարկ", min_value=1, max_value=50, value=1)
 building_type = st.selectbox("Շինության տիպ", ["Քարե", "Պանելային", "Մոնոլիտ", "Աղյուսե", "Կասետային", "Փայտե"])
 renovation = st.selectbox("Վերանորոգում", ["Կապիտալ վերանորոգված", "Դիզայներական ոճով վերանորոգված", "Եվրովերանորոգված", "Կոսմետիկ վերանորոգում", "Մասնակի վերանորոգում", "Հին վերանորոգում", "Չվերանորոգված"])
 new_building = st.selectbox("Նորակառույց", ["Այո", "Ոչ"])
+furniture = st.selectbox("Կահույք", ["Առկա է", "Առկա չե"])
 community = st.selectbox("Համայնք", list(community_mapping.keys()))
 
 # Համայնքի կոդավորված արժեքի ստացում
@@ -70,18 +71,20 @@ old_announcement = 1
 building_type_mapping = {"Քարե": 1, "Պանելային": 2, "Մոնոլիտ": 3, "Աղյուսե": 4, "Կասետային": 5, "Փայտե": 6}
 renovation_mapping = {"Կապիտալ վերանորոգված": 1, "Դիզայներական ոճով վերանորոգված": 2, "Եվրովերանորոգված": 3, "Կոսմետիկ վերանորոգում": 4, "Մասնակի վերանորոգում": 5, "Հին վերանորոգում": 6, "Չվերանորոգված": 7}
 new_building_mapping = {"Այո": 1, "Ոչ": 0}
+furniture_mapping = {"Առկա է": 1, "Առկա չե": 0}
 
 building_type_encoded = building_type_mapping[building_type]
 renovation_encoded = renovation_mapping[renovation]
 new_building_encoded = new_building_mapping[new_building]
+furniture_encoded = furniture_mapping[furniture]
 
 # Կանխատեսում
-if st.button("Կանխատեսել գինը"):
+if st.button("Կանխատեսել վարձը"):
     features = np.array([[total_area, room_count, floor, building_type_encoded, renovation_encoded,
-                          new_building_encoded, community_code, price_per_sq_meter, area_per_room, old_announcement]])
+                          new_building_encoded, furniture, community_code, price_per_sq_meter, area_per_room, old_announcement]])
     prediction = model.predict(features)[0]
 
     # Կլորացնում ենք 10,000-ի հաշվարկով
     rounded_prediction = round(prediction / 10000) * 10000
 
-    st.subheader(f"Բնակարանի կանխատեսված գինը՝ {rounded_prediction:,.0f} դրամ։")
+    st.subheader(f"Բնակարանի կանխատեսված ամսեկան վարձը՝ {rounded_prediction:,.0f} դրամ։")
